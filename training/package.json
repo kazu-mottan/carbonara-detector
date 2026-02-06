@@ -1,0 +1,13 @@
+{
+  "name": "carbonara-training",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "train": "node train.js"
+  },
+  "dependencies": {
+    "@tensorflow/tfjs-node": "^4.20.0",
+    "jpeg-js": "^0.4.4",
+    "pngjs": "^7.0.0"
+  }
+}

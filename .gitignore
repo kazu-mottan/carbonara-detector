@@ -1,0 +1,40 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Training data (images)
+training/data/carbonara/*.jpg
+training/data/carbonara/*.jpeg
+training/data/carbonara/*.png
+training/data/not-carbonara/*.jpg
+training/data/not-carbonara/*.jpeg
+training/data/not-carbonara/*.png
+
+# Keep directory structure
+!training/data/carbonara/.gitkeep
+!training/data/not-carbonara/.gitkeep
+
+# Model files (optional - uncomment if you don't want to commit models)
+# public/models/*.json
+# public/models/*.bin
