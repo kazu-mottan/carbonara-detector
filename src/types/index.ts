@@ -38,3 +38,43 @@ export type AppError = {
   message: string;
   type: 'model_load' | 'inference' | 'camera' | 'file_upload';
 };
+
+/**
+ * データセット内の画像情報
+ */
+export interface DatasetImage {
+  /** 一意のID */
+  id: string;
+  /** ファイル名 */
+  filename: string;
+  /** カテゴリ */
+  category: 'carbonara' | 'not-carbonara';
+  /** 画像パス（publicからの相対パス） */
+  path: string;
+  /** ファイルサイズ（バイト） */
+  size: number;
+  /** 作成日時（ISO 8601形式） */
+  createdAt: string;
+}
+
+/**
+ * データセット全体のメタデータ
+ */
+export interface DatasetMetadata {
+  /** メタデータ生成日時 */
+  generatedAt: string;
+  /** 合計画像数 */
+  totalCount: number;
+  /** カテゴリ別件数 */
+  categories: {
+    carbonara: number;
+    'not-carbonara': number;
+  };
+  /** 画像一覧 */
+  images: DatasetImage[];
+}
+
+/**
+ * フィルターのカテゴリ
+ */
+export type FilterCategory = 'all' | 'carbonara' | 'not-carbonara';

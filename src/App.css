@@ -38,6 +38,41 @@ body {
   color: #666;
 }
 
+/* ナビゲーションスタイル */
+.app-nav {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.nav-button {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  background: white;
+  color: #333;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 140px;
+}
+
+.nav-button:hover {
+  background: #f5f5f5;
+  border-color: #667eea;
+  transform: translateY(-2px);
+}
+
+.nav-button.active {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-color: transparent;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
 .app-main {
   flex: 1;
   display: flex;
@@ -179,6 +214,17 @@ body {
 
   .app-header p {
     font-size: 0.95rem;
+  }
+
+  .app-nav {
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+
+  .nav-button {
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+    min-width: 120px;
   }
 
   .app-main {

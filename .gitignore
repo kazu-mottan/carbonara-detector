@@ -38,3 +38,7 @@ training/data/not-carbonara/*.png
 # Model files (optional - uncomment if you don't want to commit models)
 # public/models/*.json
 # public/models/*.bin
+
+# Dataset (auto-generated)
+public/dataset/
+public/dataset-metadata.json

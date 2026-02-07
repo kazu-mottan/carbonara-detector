@@ -6,10 +6,12 @@ import { LoadingSpinner } from './components/LoadingSpinner';
 import { ImageUploader } from './components/ImageUploader';
 import { CameraCapture } from './components/CameraCapture';
 import { ResultDisplay } from './components/ResultDisplay';
+import { DatasetPage } from './pages/DatasetPage';
 import { PredictionResult } from './types';
 import './App.css';
 
 function App() {
+  const [currentPage, setCurrentPage] = useState<'main' | 'dataset'>('main');
   const [model, setModel] = useState<tf.LayersModel | null>(null);
   const [isModelLoading, setIsModelLoading] = useState(true);
   const [modelError, setModelError] = useState<string | null>(null);
@@ -63,6 +65,21 @@ function App() {
         <header className="app-header">
           <h1>🍝 Carbonara Detector</h1>
           <p>カルボナーラ判別アプリ</p>
+
+          <nav className="app-nav">
+            <button
+              className={`nav-button ${currentPage === 'main' ? 'active' : ''}`}
+              onClick={() => setCurrentPage('main')}
+            >
+              🏠 ホーム
+            </button>
+            <button
+              className={`nav-button ${currentPage === 'dataset' ? 'active' : ''}`}
+              onClick={() => setCurrentPage('dataset')}
+            >
+              📊 データセット
+            </button>
+          </nav>
         </header>
 
         <main className="app-main">
@@ -81,24 +98,43 @@ function App() {
         <header className="app-header">
           <h1>🍝 Carbonara Detector</h1>
           <p>カルボナーラ判別アプリ</p>
+
+          <nav className="app-nav">
+            <button
+              className={`nav-button ${currentPage === 'main' ? 'active' : ''}`}
+              onClick={() => setCurrentPage('main')}
+            >
+              🏠 ホーム
+            </button>
+            <button
+              className={`nav-button ${currentPage === 'dataset' ? 'active' : ''}`}
+              onClick={() => setCurrentPage('dataset')}
+            >
+              📊 データセット
+            </button>
+          </nav>
         </header>
 
         <main className="app-main">
-          <div className="content-card error">
-            <h2>⚠️ エラーが発生しました</h2>
-            <p className="error-message">{modelError}</p>
-            <div className="error-help">
-              <p>解決方法:</p>
-              <ul>
-                <li>モデル訓練が完了していますか？</li>
-                <li>public/models/ ディレクトリにモデルファイルがありますか？</li>
-                <li>開発サーバーが正しく起動していますか？</li>
-              </ul>
-              <button onClick={() => window.location.reload()} className="retry-button">
-                再読み込み
-              </button>
+          {currentPage === 'main' ? (
+            <div className="content-card error">
+              <h2>⚠️ エラーが発生しました</h2>
+              <p className="error-message">{modelError}</p>
+              <div className="error-help">
+                <p>解決方法:</p>
+                <ul>
+                  <li>モデル訓練が完了していますか？</li>
+                  <li>public/models/ ディレクトリにモデルファイルがありますか？</li>
+                  <li>開発サーバーが正しく起動していますか？</li>
+                </ul>
+                <button onClick={() => window.location.reload()} className="retry-button">
+                  再読み込み
+                </button>
+              </div>
             </div>
-          </div>
+          ) : (
+            <DatasetPage />
+          )}
         </main>
       </div>
     );
@@ -110,45 +146,66 @@ function App() {
       <header className="app-header">
         <h1>🍝 Carbonara Detector</h1>
         <p>カルボナーラ判別アプリ</p>
+
+        <nav className="app-nav">
+          <button
+            className={`nav-button ${currentPage === 'main' ? 'active' : ''}`}
+            onClick={() => setCurrentPage('main')}
+          >
+            🏠 ホーム
+          </button>
+          <button
+            className={`nav-button ${currentPage === 'dataset' ? 'active' : ''}`}
+            onClick={() => setCurrentPage('dataset')}
+          >
+            📊 データセット
+          </button>
+        </nav>
       </header>
 
       <main className="app-main">
-        {prediction ? (
-          // 判別結果表示
+        {currentPage === 'main' ? (
           <>
-            <ResultDisplay prediction={prediction} image={selectedImage} />
-            <button onClick={handleReset} className="reset-button">
-              別の画像を判別
-            </button>
+            {prediction ? (
+              // 判別結果表示
+              <>
+                <ResultDisplay prediction={prediction} image={selectedImage} />
+                <button onClick={handleReset} className="reset-button">
+                  別の画像を判別
+                </button>
+              </>
+            ) : (
+              // 画像選択UI
+              <div className="content-card">
+                {isInferencing ? (
+                  <LoadingSpinner message="判別中..." />
+                ) : (
+                  <>
+                    <div className="instructions">
+                      <h2>料理の画像を選択してください</h2>
+                      <p>カルボナーラかどうかを判別します</p>
+                    </div>
+
+                    <div className="input-section">
+                      <ImageUploader
+                        onImageSelect={handleImageSelect}
+                        disabled={isInferencing}
+                      />
+
+                      <div className="divider">または</div>
+
+                      <CameraCapture
+                        onCapture={handleImageSelect}
+                        disabled={isInferencing}
+                      />
+                    </div>
+                  </>
+                )}
+              </div>
+            )}
           </>
         ) : (
-          // 画像選択UI
-          <div className="content-card">
-            {isInferencing ? (
-              <LoadingSpinner message="判別中..." />
-            ) : (
-              <>
-                <div className="instructions">
-                  <h2>料理の画像を選択してください</h2>
-                  <p>カルボナーラかどうかを判別します</p>
-                </div>
-
-                <div className="input-section">
-                  <ImageUploader
-                    onImageSelect={handleImageSelect}
-                    disabled={isInferencing}
-                  />
-
-                  <div className="divider">または</div>
-
-                  <CameraCapture
-                    onCapture={handleImageSelect}
-                    disabled={isInferencing}
-                  />
-                </div>
-              </>
-            )}
-          </div>
+          <DatasetPage />
         )}
       </main>
 
