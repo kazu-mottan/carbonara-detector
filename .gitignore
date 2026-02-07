@@ -23,17 +23,8 @@ dist-ssr
 *.sln
 *.sw?
 
-# Training data (images)
-training/data/carbonara/*.jpg
-training/data/carbonara/*.jpeg
-training/data/carbonara/*.png
-training/data/not-carbonara/*.jpg
-training/data/not-carbonara/*.jpeg
-training/data/not-carbonara/*.png
-
-# Keep directory structure
-!training/data/carbonara/.gitkeep
-!training/data/not-carbonara/.gitkeep
+# Training data (images) - コミット対象に変更
+# 画像はGitHubで管理します
 
 # Model files (optional - uncomment if you don't want to commit models)
 # public/models/*.json
